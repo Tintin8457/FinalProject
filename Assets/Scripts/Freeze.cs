@@ -5,6 +5,7 @@ using UnityEngine;
 public class Freeze : MonoBehaviour
 {
     private ActivatedFreeze freezer; //Get the freeze script
+    private float waitFreeze = 0.8f; //Use to wait until after sound plays
 
     void Start()
     {
@@ -26,8 +27,17 @@ public class Freeze : MonoBehaviour
         //Activate the robot freeze time
         if (grabRuby != null)
         {
-            freezer.frozen = true; //start to freeze robots for a limited time
-            Destroy(gameObject); //Destroy robots
+            grabRuby.PlaySound(grabRuby.freezeBox); //Play sound
+            StartCoroutine("CanFreeze"); //Wait to freeze until sound finishes playing
         }
+    }
+
+    //Wait 1 second before freezing robots until sound stops
+    IEnumerator CanFreeze()
+    {
+        yield return new WaitForSeconds(waitFreeze);
+
+        freezer.frozen = true; //start to freeze robots for a limited time
+        Destroy(gameObject); //Destroy robots
     }
 }

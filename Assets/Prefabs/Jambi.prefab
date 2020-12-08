@@ -339,10 +339,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'There are more robots that need to be fixed!
-
-    Press X to go to the
-    next stage when I am finished talking while you are next to me!'
+  m_text: Talk to the HouseKeeper when you get sent to a new world!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -372,8 +369,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -416,12 +413,12 @@ MonoBehaviour:
   m_margin: {x: 19.095167, y: 18.600657, z: 15.812262, w: 26.704361}
   m_textInfo:
     textComponent: {fileID: 1141405686}
-    characterCount: 129
+    characterCount: 57
     spriteCount: 0
-    spaceCount: 27
-    wordCount: 28
+    spaceCount: 11
+    wordCount: 12
     linkCount: 0
-    lineCount: 6
+    lineCount: 4
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0

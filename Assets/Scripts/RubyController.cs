@@ -34,6 +34,8 @@ public class RubyController : MonoBehaviour
     public AudioClip throwSound;
     public AudioClip hitSound;
     public AudioClip collectedClip;
+    public AudioClip freezeBox;
+    public AudioClip npc;
 
     //Particle System Prefabs
     public GameObject hitEffect;
@@ -64,7 +66,12 @@ public class RubyController : MonoBehaviour
     public bool moreHealth; //the player can gain more health
     public bool choices; //choices will appear
     public int offerLimit = 2; //Limit the player from presssing the X button many times
+    public bool rapidFire; //Use for random chance of 2 from charm powerup
     public bool defaultLoss; //Display default message when the player has no more choices
+    public bool collectedAmulet; //Activate bool once amulet is collected
+    public bool canRestart; //Restart once the prince is near the player
+    public bool limitPower; //Use when the quest is done
+
     // public AudioSource gamePlayer;
     // public AudioClip defaultMusic;
     // public AudioClip loseMusic;
@@ -90,7 +97,11 @@ public class RubyController : MonoBehaviour
        choices = false; //I highly suggest to go inside the house to find out for yourself
        defaultLoss = false; //This will happen
        canShoot = true; //Allow the player to shoot
-    
+       collectedAmulet = false; 
+       canRestart = false;
+       rapidFire = false;
+       limitPower = false;
+           
        //Find NPC script
        GameObject enableMove = GameObject.FindGameObjectWithTag("Jambi");
        
@@ -130,7 +141,7 @@ public class RubyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentHealth > 0)
+        if (currentHealth > 0 && limitPower == false)
         {
             //Get keyboard input
             horizontal = Input.GetAxis("Horizontal");
@@ -188,9 +199,27 @@ public class RubyController : MonoBehaviour
                     }
 
                     //Transport player to the second stage
-                    if (currentAmount == 6 && jambi.transportRuby == true)
+                    // if (currentAmount == 6 && jambi.transportRuby == true)
+                    // {
+                    //     SceneManager.LoadScene("SecondStage");
+                    // }
+
+                    //Get the HouseKeeper to hit with a raycast
+                    HouseKeeper hk = hit.collider.GetComponent<HouseKeeper>();
+
+                    //Display dialog box
+                    if (hk != null)
                     {
-                        SceneManager.LoadScene("SecondStage");
+                        hk.DisplayDialog();
+                    }
+
+                    //Get the Plant to hit with a raycast
+                    Plant pt = hit.collider.GetComponent<Plant>();
+
+                    //Display dialog box
+                    if (pt != null)
+                    {
+                        pt.DisplayDialog();
                     }
 
                     //Get the Bargainer to hit it with a raycast
@@ -273,11 +302,29 @@ public class RubyController : MonoBehaviour
             //Level 2!
             if (level == 2)
             {
-                //Display the win message when all robots have been fixed
-                speed = 0.0f; //Disable movement
-                outcomeBox.SetActive(true); //Display win text
-                outcomeText.text = "You have fixed the robots. Game by Brandon Perez. Press R to restart the game or esc to quit the game."; //Display win text
-                Restart();
+                //Display the message to bring the amulet to the housekeeper
+                if (popUp == true)
+                {
+                    speed = 0.0f; //Disable movement
+                    outcomeBox.SetActive(true); //Display message
+                    outcomeText.text = "Collect the amulet and go back to the Housekeeper! Press Q to close!"; 
+                }
+
+                //Close the popup by pressing Q
+                if (collectedAmulet == false && Input.GetKey(KeyCode.Q))
+                {
+                    popUp = false;
+                    speed = 3.0f;
+                    outcomeBox.SetActive(false); //Disable Outcome box
+                }
+
+                //Display win message when the prince is near the player
+                else if (canRestart == true)
+                {
+                    outcomeBox.SetActive(true); //Display win text
+                    outcomeText.text = "You have rescued the prince. Game by Brandon Perez. Press R to restart the game or esc to quit the game."; //Display win text
+                    Restart();
+                }
             }
         }
     }
@@ -357,7 +404,11 @@ public class RubyController : MonoBehaviour
             cogCounter.text = "Cogs: " + cogs.ToString(); //Display the current amount of cogs
             playerAnimator.SetTrigger("Launch"); //Play launch animation
             PlaySound(throwSound);
-            canShoot = false; //Stop from shooting
+
+            if (rapidFire == false)
+            {
+                canShoot = false; //Stop from shooting
+            }
         }
     }
     
@@ -419,21 +470,4 @@ public class RubyController : MonoBehaviour
             }
         }
     }
-
-    //Play hit effect after colliding into the enemy
-    // void OnCollisionEnter2D(Collision2D enemy)
-    // {
-    //     if (enemy.gameObject.tag == "Enemy")
-    //     {
-    //         //Hit particle effect only plays if the particle system is not looping and Stop Action is to Destroy
-    //         if (hitEffect.main.loop == false && hitEffect.main.stopAction == ParticleSystemStopAction.Destroy)
-    //         {
-    //             Instantiate(hitEffect, playerRB.position, Quaternion.identity);
-    //             hitEffect.Play();
-    //             Debug.Log("Particle Effect: " + hitEffect);
-    //         }
-    //         // Instantiate(hitEffect);
-    //         // hitEffect.Play();
-    //     }
-    // }
 }

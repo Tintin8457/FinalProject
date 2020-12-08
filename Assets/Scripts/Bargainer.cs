@@ -41,6 +41,8 @@ public class Bargainer : MonoBehaviour
             //Stop displaying the dialog box once it is below 0
             if (timerDisplay < 0)
             {
+                ruby.GetComponent<AudioSource>().Stop();
+
                 //Disable default message when the player has not fixed all robots
                 if (ruby.canbuy == false)
                 {
@@ -105,6 +107,8 @@ public class Bargainer : MonoBehaviour
     public void DisplayDialog()
     {
         timerDisplay = displayTime;
+
+        ruby.PlaySound(ruby.npc);
 
         //Display default message if the player cannot buy anything and the limit is 0
         if (ruby.canbuy == false && ruby.offerLimit == 0 && ruby.defaultLoss == true)

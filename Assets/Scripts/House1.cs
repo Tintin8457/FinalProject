@@ -24,7 +24,7 @@ public class House1 : MonoBehaviour
         //Go back to the Main level
         if (moveRuby.GetComponent<Rigidbody2D>().position.x >= 73.84f)
         {
-            moveRuby.GetComponent<Rigidbody2D>().position = new Vector2(-0.23f, -0.33f); //Teleport player
+            moveRuby.GetComponent<Rigidbody2D>().position = new Vector2(-1.227622f, -1.410743f); //Teleport player
             confinerStation.m_BoundingShape2D = defaultConfiner; //Switch confiner
             moveRuby.defaultLoss = false; //Reset loss message to false if still enabled
             moveRuby.canbuy = false; //go back to normal, nothing to see here

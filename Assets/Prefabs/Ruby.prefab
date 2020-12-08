@@ -108,6 +108,8 @@ MonoBehaviour:
   throwSound: {fileID: 8300000, guid: b2edfd40873655249ba0e01a5cf705be, type: 3}
   hitSound: {fileID: 8300000, guid: 9b1bb1f450b7d444fa4a8019d13519a7, type: 3}
   collectedClip: {fileID: 8300000, guid: af5f8b64e3f58f24c87ff8f789b04f6c, type: 3}
+  freezeBox: {fileID: 8300000, guid: 7bd5d37fa12c3834d99a68b67df13fec, type: 3}
+  npc: {fileID: 8300000, guid: 2cfb06b8697fcf94daa5244c707c1406, type: 3}
   hitEffect: {fileID: 4987626387830736402, guid: 71d07abae59719948a508dbde54edbe5,
     type: 3}
   pickupEffect: {fileID: 4987626387830736402, guid: 0529719de39c47b4f8dc314747ba18f7,
@@ -127,7 +129,11 @@ MonoBehaviour:
   moreHealth: 0
   choices: 0
   offerLimit: 2
+  rapidFire: 0
   defaultLoss: 0
+  collectedAmulet: 0
+  canRestart: 0
+  limitPower: 0
 --- !u!50 &918411631146239146
 Rigidbody2D:
   serializedVersion: 4
@@ -206,7 +212,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 0.853
   m_Pitch: 1
   Loop: 0
   Mute: 0

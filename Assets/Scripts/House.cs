@@ -24,7 +24,7 @@ public class House : MonoBehaviour
         //Secret room
         if (moveRuby.GetComponent<Rigidbody2D>().position.y <= 5.22f)
         {
-            moveRuby.GetComponent<Rigidbody2D>().position = new Vector2(83.71611f, 6.07f); //Teleport player
+            moveRuby.GetComponent<Rigidbody2D>().position = new Vector2(80.3255f, 5.285045f); //Teleport player
             confinerStation.m_BoundingShape2D = extraConfiner; //Switch confiner
             moveRuby.canbuy = true; //Are you ready?
 

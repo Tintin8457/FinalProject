@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.SceneManagement;
 
 public class NonPlayerCharacter : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class NonPlayerCharacter : MonoBehaviour
     float timerDisplay; //How long to display the dialog
     private RubyController ruby;
     public bool transportRuby; //Allow Ruby to go to second stage
+    private float teleWait = 0.5f; //Use to wait until teleported
 
     // Start is called before the first frame update
     void Start()
@@ -45,14 +46,17 @@ public class NonPlayerCharacter : MonoBehaviour
                 //Disable default message when the player has not fixed all robots
                 if (ruby.currentAmount < 6)
                 {
+                    ruby.GetComponent<AudioSource>().Stop();
                     dialogBox.SetActive(false);
                 }
                 
                 //Disable stage 2 transition message when the player has fixed all robots
                 else if (ruby.currentAmount == 6)
                 {
+                    ruby.GetComponent<AudioSource>().Stop();
                     transitionBox.SetActive(false);
                     transportRuby = true;
+                    StartCoroutine("TeleportPlayer");
                 }
             }
         }
@@ -66,13 +70,27 @@ public class NonPlayerCharacter : MonoBehaviour
         //Display default message when the player has not fixed all robots
         if (ruby.currentAmount < 6)
         {
+            ruby.PlaySound(ruby.npc);
             dialogBox.SetActive(true);
         }
 
         //Display stage 2 transition message when the player has fixed all robots
         else if (ruby.currentAmount == 6)
         {
+            ruby.PlaySound(ruby.npc);
             transitionBox.SetActive(true);
+        }
+    }
+
+    //Wait a few seconds until teleportation
+    IEnumerator TeleportPlayer()
+    {
+        yield return new WaitForSeconds(teleWait);
+
+        //Transport player to the second stage
+        if (transportRuby == true)
+        {
+            SceneManager.LoadScene("SecondStage");
         }
     }
 }

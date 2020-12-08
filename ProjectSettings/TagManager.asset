@@ -9,6 +9,9 @@ TagManager:
   - Box
   - Robots
   - Choices
+  - Housekeeper
+  - Icon
+  - Charm
   layers:
   - Default
   - TransparentFX
